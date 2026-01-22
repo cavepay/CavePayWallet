@@ -7,7 +7,7 @@ export interface SecureKeyStore {
 
   isLocked(): Promise<boolean>
 
-  hasKey(): Promise<boolean>
+  hasSeed(): Promise<boolean>
 
   generateSeed(): Promise<Uint8Array>
 
