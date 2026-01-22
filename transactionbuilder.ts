@@ -1,30 +1,24 @@
-export class transactionbuilder {
-  private tx: any = {}
+export interface TransactionBuilder {
+  build(tx: {
+    from: string
+    to: string
+    value?: bigint
+    data?: Uint8Array
+    nonce: number
+    chainId: number
+    gasLimit: bigint
+    maxFeePerGas?: bigint
+    maxPriorityFeePerGas?: bigint
+  }): Uint8Array
 
-  to(address: string) {
-    this.tx.to = address
-    return this
-  }
-
-  value(value: string) {
-    this.tx.value = value
-    return this
-  }
-
-  chainid(chainid: number) {
-    this.tx.chainid = chainid
-    return this
-  }
-
-  data(data: string) {
-    this.tx.data = data
-    return this
-  }
-
-  build() {
-    if (!this.tx.to || !this.tx.value || !this.tx.chainid) {
-      throw new Error('incomplete transaction')
-    }
-    return this.tx
-  }
+  simulate(tx: {
+    from: string
+    to: string
+    value?: bigint
+    data?: Uint8Array
+  }): Promise<{
+    success: boolean
+    gasUsed?: bigint
+    error?: string
+  }>
 }
