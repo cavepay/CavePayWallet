@@ -1,5 +1,21 @@
-export interface securekeystore {
-  generatekey(index: number): Promise<{ id: string }>
-  getpublickey(keyid: string): Promise<string>
-  sign(keyid: string, payload: Uint8Array): Promise<Uint8Array>
+export interface SecureKeyStore {
+  create(password: string): Promise<void>
+
+  unlock(password: string): Promise<void>
+
+  lock(): Promise<void>
+
+  isLocked(): Promise<boolean>
+
+  hasKey(): Promise<boolean>
+
+  generateSeed(): Promise<Uint8Array>
+
+  importSeed(seed: Uint8Array): Promise<void>
+
+  derivePrivateKey(index: number): Promise<Uint8Array>
+
+  sign(payload: Uint8Array, index: number): Promise<Uint8Array>
+
+  destroy(): Promise<void>
 }
